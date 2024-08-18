@@ -8,8 +8,6 @@ import java.sql.SQLException;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 
 /*
  * 
@@ -22,8 +20,6 @@ public class AccessDB {
 	private static final String PASS = "pukupukuDB";
 
 	public static Connection con = null;
-	public static PreparedStatement ps = null;
-	public static ResultSet rs = null;
 
 	public AccessDB() {
 	}
@@ -31,11 +27,12 @@ public class AccessDB {
 	public void selectFunction() {
 
 		try {
-			Class.forName(MYSQL_DRIVER);
-
-			con = DriverManager.getConnection(JDBC_CONNECTION, USER, PASS);
-
 			while (true) {
+				// ～Dataクラスでクローズするため、whileの中
+				Class.forName(MYSQL_DRIVER);
+
+				con = DriverManager.getConnection(JDBC_CONNECTION, USER, PASS);
+
 				BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
 				System.out.println("希望する操作の番号を入力してください。");
@@ -50,7 +47,8 @@ public class AccessDB {
 					return;
 				case 1:
 					// データ取得
-					getData gd = new getData(con, ps, rs);
+					System.out.println("データ取得を選択しました。\r\n");
+					getData gd = new getData(con);
 					gd.selectSQL();
 					break;
 

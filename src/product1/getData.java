@@ -12,46 +12,63 @@ import java.util.List;
 
 public class getData {
 	private Connection con;
-	private PreparedStatement ps;
-	private ResultSet rs;
+	private PreparedStatement ps = null;
+	private ResultSet rs = null;
 
-	public getData(Connection con, PreparedStatement ps, ResultSet rs) {
+	public getData(Connection con) {
 		this.con = con;
-		this.ps = ps;
-		this.rs = rs;
 	}
 
 	public void selectSQL() {
 		try {
-			BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+			while (true) {
+				BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
-			System.out.println("検索したい食品を入力してください。: ");
+				System.out.print("検索したい食品を入力してください。データ取得を終了したい場合は「nothing」を入力してください。: ");
 
-			String foodName = br.readLine();
+				String foodName = br.readLine();
 
-			String getTableSQL = "select table_name from InforMation_schema.tables where table_schema = 'foods_in_refrigerator';";
+				if (foodName.equals("nothing")) {
+					System.out.println("機能選択に戻ります。\\r\\n");
+					break;
+				}
 
-			rs = ps.executeQuery(getTableSQL);
+				// テーブル名を取得するSQLを作成
+				String getTableSQL = "show tables;";
 
-			List<String> tableNames = new ArrayList<>();
+				// SQL文をコンパイル
+				ps = con.prepareStatement(getTableSQL);
 
-			while (rs.next()) {
-				tableNames.add(rs.getString("table_name"));
-			}
+				// SQLを実行し、結果を取得	
+				rs = ps.executeQuery(getTableSQL);
 
-			for (String tableName : tableNames) {
-				String SQL = "SELECT * FROM " + tableName + " WHERE column_name = " + foodName;
-				;
+				List<String> tableNames = new ArrayList<>();
 
-				ps = con.prepareStatement(SQL);
-
-				ps.setString(1, foodName);
-
-				rs = ps.executeQuery();
-
+				// 取得したテーブル名をリストに格納
 				while (rs.next()) {
-					System.out.println("食品名：" + rs.getString("name") + "　価格：" + rs.getInt("price")
-							+ "　数量：" + rs.getInt("counts") + "　期限" + rs.getDate("expiration_date"));
+					tableNames.add(rs.getString(1));
+				}
+
+				for (String tableName : tableNames) {
+					String SQL = "SELECT * FROM " + tableName + " WHERE foodName = ?";
+					;
+
+					// SQL文をコンパイル
+					ps = con.prepareStatement(SQL);
+
+					// プレースホルダーに入力した食品名を設定
+					ps.setString(1, foodName);
+
+					rs = ps.executeQuery();
+
+					while (rs.next()) {
+						System.out.println(
+								"-----------------------------------------------------------------------------");
+						System.out.println("テーブル名：" + tableName + "　食品名：" + rs.getString("foodName") + "　価格："
+								+ rs.getInt("foodPrice")
+								+ "　数量：" + rs.getInt("foodCounts") + "　期限：" + rs.getDate("foodExpirationDate"));
+					}
+					System.out.println("-----------------------------------------------------------------------------");
 				}
 			}
 		} catch (IOException e) {
@@ -59,6 +76,18 @@ public class getData {
 		} catch (SQLException e) {
 			System.out.println("SQLエラーが発生しました。");
 			e.printStackTrace();
+		} finally {
+			try {
+				if (rs != null)
+					rs.close();
+				if (ps != null)
+					ps.close();
+				if (con != null)
+					con.close();
+			} catch (SQLException e) {
+				System.out.println("データベースのクローズに失敗しました。");
+				e.printStackTrace();
+			}
 		}
 
 	}
