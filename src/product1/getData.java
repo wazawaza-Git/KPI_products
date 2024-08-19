@@ -30,7 +30,7 @@ public class getData {
 				String foodName = br.readLine();
 
 				if (foodName.equals("nothing")) {
-					System.out.println("機能選択に戻ります。\\r\\n");
+					System.out.println("機能選択に戻ります。\\\\r\\\\n");
 					break;
 				}
 
