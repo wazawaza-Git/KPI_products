@@ -57,6 +57,18 @@ public class AccessDB {
 					insertData id = new insertData(con);
 					id.insertSQL();
 					break;
+
+				case 3:
+					// データ削除
+					deleteData dd = new deleteData(con);
+					dd.deleteSQL();
+					break;
+
+				case 4:
+					// データ更新
+					UpdateData ud = new UpdateData(con);
+					ud.updateSQL();
+					break;
 				}
 			}
 		} catch (SQLException se) {

@@ -16,6 +16,7 @@ public class getData {
 	private ResultSet rs = null;
 
 	public getData(Connection con) {
+		// Connectionインターフェースをメソッドで使用するため
 		this.con = con;
 	}
 

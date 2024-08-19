@@ -20,7 +20,7 @@ public class insertData {
 			// テーブル指定
 			BufferedReader br0 = new BufferedReader(new InputStreamReader(System.in));
 
-			System.out.println("追加したい食品の項目を入力してください。");
+			System.out.println("食品の項目を入力してください。");
 			System.out.print("鶏肉, 豚肉, 野菜, 刺身, 魚, デザート, 調味料, 飲料：");
 
 			String tableName = br0.readLine();
@@ -78,9 +78,9 @@ public class insertData {
 
 		} catch (IOException e) {
 			System.out.println("入出力に失敗しました。");
-		} catch (SQLException e) {
+		} catch (SQLException se) {
 			System.out.println("SQLエラーが発生しました。");
-			e.printStackTrace();
+			se.printStackTrace();
 		} finally {
 			try {
 				if (con != null) {
@@ -89,9 +89,9 @@ public class insertData {
 				if (ps != null) {
 					ps.close();
 				}
-			} catch (SQLException e) {
+			} catch (SQLException se) {
 				System.out.println("データベースのクローズに失敗しました。");
-				e.printStackTrace();
+				se.printStackTrace();
 			}
 		}
 	}
