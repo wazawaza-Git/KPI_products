@@ -36,7 +36,7 @@ public class AccessDB {
 				BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
 				System.out.println("希望する操作の番号を入力してください。");
-				System.out.print("ホームに戻る：0, データ取得：1, データ追加：2, データ削除：3, データ更新：4, 数量アラート：5, 期限アラート：6 | 番号 = ");
+				System.out.print("ホームに戻る：0, データ取得：1, データ追加：2, データ削除：3, データ更新：4, 期限アラート：5 | 番号 = ");
 
 				String inputNumber = br.readLine();
 
@@ -68,6 +68,12 @@ public class AccessDB {
 					// データ更新
 					UpdateData ud = new UpdateData(con);
 					ud.updateSQL();
+					break;
+
+				case 5:
+					// 期限アラート
+					InformDate Id = new InformDate(con);
+					Id.alertDate();
 					break;
 				}
 			}
