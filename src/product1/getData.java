@@ -60,6 +60,7 @@ public class getData {
 					// プレースホルダーに入力した食品名を設定
 					ps.setString(1, foodName);
 
+					// カラム名を変数化している時はexecuteQuery()として引数にはSQLを設定しない？
 					rs = ps.executeQuery();
 
 					while (rs.next()) {

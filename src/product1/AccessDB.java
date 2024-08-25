@@ -75,6 +75,12 @@ public class AccessDB {
 					InformDate Id = new InformDate(con);
 					Id.alertDate();
 					break;
+
+				case 6:
+					// 買い物メモ作成
+					ShoppingList sl = new ShoppingList(con);
+					sl.makeList();
+					break;
 				}
 			}
 		} catch (SQLException se) {
