@@ -13,6 +13,10 @@ public class Mondai201 {
 
 		try {
 			br = new BufferedReader(new InputStreamReader(System.in));
+
+			System.out.println("ファイルの読み込みを行います。");
+			System.out.print("ファイル名を指定して下さいーー＞");
+
 			String inputFileName = br.readLine();
 
 			ArrayList<Person> people = new ArrayList<>();
@@ -32,7 +36,15 @@ public class Mondai201 {
 			}
 
 		} catch (IOException e) {
-
+			System.out.println("ファイルの読み込みに失敗しました。");
+		} finally {
+			try {
+				if (br != null) {
+					br.close();
+				}
+			} catch (IOException e) {
+				System.out.println("ファイルのクローズに失敗しました。");
+			}
 		}
 
 	}

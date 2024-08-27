@@ -11,7 +11,7 @@ public class CSVFileReader {
 
 	}
 
-	private ArrayList<String> people = new ArrayList<>();
+	private ArrayList<Person> people = new ArrayList<Person>();
 
 	public ArrayList<Person> read(String inputFileName) {
 		BufferedReader br = null;
@@ -32,6 +32,7 @@ public class CSVFileReader {
 				Person human = new Person(CSVData[0], CSVData[1], CSVData[2], CSVData[3], CSVData[4]);
 
 				people.add(human);
+
 			}
 		} catch (IOException e) {
 			System.out.println("ファイルの読み込みに失敗しました。");
@@ -46,7 +47,7 @@ public class CSVFileReader {
 				}
 			}
 		}
-
+		return people;
 	}
 
 }
