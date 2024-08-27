@@ -25,9 +25,9 @@ public class UpdateCounts {
 
 			System.out.print("更新後の数量を入力してください。（数字のみ入力）：");
 
-			String inputPrice = br.readLine();
+			String inputCounts = br.readLine();
 
-			int newCounts = Integer.parseInt(inputPrice);
+			int newCounts = Integer.parseInt(inputCounts);
 
 			String SQL = "update " + tableName + " set foodCounts = ? where foodName = ?;";
 
