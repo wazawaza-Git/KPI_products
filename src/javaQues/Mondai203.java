@@ -1,6 +1,7 @@
 package javaQues;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
@@ -16,25 +17,34 @@ public class Mondai203 {
 
 			String outputFileName = br.readLine();
 
-			inputLine = new BufferedReader(new InputStreamReader(System.in));
-
-			System.out.println("データを入力してください。「E」を入力すると保存を開始するため、書き込みを終了します。");
-
-			System.out.println("例のように入力してください。例：名前,年齢,性別,出身都道府県,職業");
-
-			CSVWriter cw = new CSVWriter(outputFileName);
+			File file = new File(outputFileName);
 
 			while (true) {
-				String writeLine = inputLine.readLine();
+				if (file.exists()) {
 
-				if (writeLine.equals("E")) {
-					System.out.println("「E」が入力されました。書き込みを終了します。");
-					cw.writer();
-					break;
+					inputLine = new BufferedReader(new InputStreamReader(System.in));
+
+					System.out.println("データを入力してください。「E」を入力すると保存を開始するため、書き込みを終了します。");
+
+					System.out.println("例のように入力してください。例：名前,年齢,性別,出身都道府県,職業");
+
+					CSVWriter cw = new CSVWriter(outputFileName);
+
+					while (true) {
+						String writeLine = inputLine.readLine();
+
+						if (writeLine.equals("E")) {
+							System.out.println("「E」が入力されました。書き込みを終了します。");
+							cw.writer();
+							break;
+						}
+
+						cw.dataCollect(writeLine);
+
+					}
+				} else {
+					System.out.println("存在しないファイルが指定されました。");
 				}
-
-				cw.dataCollect(writeLine);
-
 			}
 
 		} catch (IOException e) {

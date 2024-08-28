@@ -1,6 +1,7 @@
 package javaQues;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.io.IOException;
@@ -18,21 +19,30 @@ public class Mondai202 {
 
 			String readFileName = br1.readLine();
 
-			ArrayList<Person> people = new ArrayList<>();
+			File file = new File(readFileName);
 
-			CSVFileReader csfr = new CSVFileReader();
+			while (true) {
+				if (file.exists()) {
+					ArrayList<Person> people = new ArrayList<>();
 
-			people = csfr.read(readFileName);
+					CSVFileReader csfr = new CSVFileReader();
 
-			br2 = new BufferedReader(new InputStreamReader(System.in));
+					people = csfr.read(readFileName);
 
-			System.out.print("書き込むファイル名を指定して下さいーー＞");
+					br2 = new BufferedReader(new InputStreamReader(System.in));
 
-			String writeFileName = br2.readLine();
+					System.out.print("書き込むファイル名を指定して下さいーー＞");
 
-			CSVFileWriter csvfw = new CSVFileWriter(writeFileName);
+					String writeFileName = br2.readLine();
 
-			csvfw.write(people);
+					CSVFileWriter csvfw = new CSVFileWriter(writeFileName);
+
+					csvfw.write(people);
+
+				} else {
+					System.out.println("存在しないファイルが読込ファイルとして指定されました。");
+				}
+			}
 
 		} catch (IOException e) {
 			System.out.println("ファイルの読み込みに失敗しました。");
